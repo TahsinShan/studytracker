@@ -93,35 +93,38 @@ const SUBJECTS = {
   },
 
   "Math 1P": {
-    color: "#f43f5e", glow: "#f43f5e40",
-    chapters: [
-      { id: "m1c1", num: 1, name: "Matrix & Determinant", partial: false },
-      { id: "m1c2", num: 2, name: "Straight Line", partial: false },
-      { id: "m1c3", num: 3, name: "Circle", partial: false },
-      { id: "m1c4", num: 4, name: "Conic Section", partial: false },
-      { id: "m1c5", num: 5, name: "Linear Programming", partial: false },
-      { id: "m1c6", num: 6, name: "Differential Calculus", partial: false },
-      { id: "m1c7", num: 7, name: "Integral Calculus", partial: false },
-      { id: "m1c8", num: 8, name: "Coordinate Geometry", partial: false },
-      { id: "m1c9", num: 9, name: "Trigonometry", partial: false },
-      { id: "m1c10", num: 10, name: "Probability", partial: false },
-    ]
-  },
+  color: "#f43f5e",
+  glow: "#f43f5e40",
+  chapters: [
+    { id: "m1c1", num: 1, name: "Matrix & Determinant", partial: false },
+    { id: "m1c2", num: 2, name: "Vector", partial: false },
+    { id: "m1c3", num: 3, name: "Straight Line", partial: false },
+    { id: "m1c4", num: 4, name: "Circle", partial: false },
+    { id: "m1c5", num: 5, name: "Permutation & Combination", partial: false },
+    { id: "m1c6", num: 6, name: "Trigonometric Ratios", partial: false },
+    { id: "m1c7", num: 7, name: "Associated Angle", partial: false },
+    { id: "m1c8", num: 8, name: "Functions & Graphs", partial: false },
+    { id: "m1c9", num: 9, name: "Differential Calculus", partial: false },
+    { id: "m1c10", num: 10, name: "Integral Calculus", partial: false },
+  ]
+},
 
-  "Math 2P": {
-    color: "#fb7185", glow: "#fb718540",
-    chapters: [
-      { id: "m2c1", num: 1, name: "Complex Number", partial: false },
-      { id: "m2c2", num: 2, name: "Polynomial & Equation", partial: false },
-      { id: "m2c3", num: 3, name: "Inverse Trigonometric Functions", partial: false },
-      { id: "m2c4", num: 4, name: "Statics", partial: false },
-      { id: "m2c5", num: 5, name: "Plane Motion", partial: false },
-      { id: "m2c6", num: 6, name: "Vector", partial: false },
-      { id: "m2c7", num: 7, name: "Transformation", partial: false },
-      { id: "m2c8", num: 8, name: "Differential Equation", partial: false },
-      { id: "m2c9", num: 9, name: "Numerical Methods", partial: false },
-    ]
-  },
+"Math 2P": {
+  color: "#fb7185",
+  glow: "#fb718540",
+  chapters: [
+    { id: "m2c1", num: 1, name: "Real Number & Inequalities", partial: false },
+    { id: "m2c2", num: 2, name: "Linear Programming", partial: false },
+    { id: "m2c3", num: 3, name: "Complex Number", partial: false },
+    { id: "m2c4", num: 4, name: "Polynomial & Polynomial Equations", partial: false },
+    { id: "m2c5", num: 5, name: "Binomial Expansion", partial: false },
+    { id: "m2c6", num: 6, name: "Conic Section", partial: false },
+    { id: "m2c7", num: 7, name: "Inverse Trigonometric Functions & Equations", partial: false },
+    { id: "m2c8", num: 8, name: "Statics", partial: false },
+    { id: "m2c9", num: 9, name: "Plane Motion", partial: false },
+    { id: "m2c10", num: 10, name: "Probability & Statistics", partial: false },
+  ]
+},
 
   "ICT": {
     color: "#06b6d4", glow: "#06b6d440",
