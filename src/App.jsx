@@ -437,7 +437,7 @@ export default function App() {
 
       <main style={{ maxWidth: 1400, margin: "0 auto", padding: "28px 24px", position: "relative", zIndex: 1 }}>
         {tab === "Dashboard" && <DashboardTab chapters={allChapters} meta={meta} setMeta={setMeta} subjects={SUBJECTS} overallProgress={overallProgress} revisedCount={revisedCount} totalChapters={totalChapters} strongCount={strongCount} todayRevised={todayRevised} dueToday={dueToday} emergencyMode={emergencyMode} setTab={setTab} notify={notify} />}
-        {tab === "Chapters" && <ChaptersTab chapters={chapters} subjects={SUBJECTS} subjectFilter={subjectFilter} setSubjectFilter={setSubjectFilter} statusFilter={statusFilter} setStatusFilter={setStatusFilter} selectedChapter={selectedChapter} setSelectedChapter={setSelectedChapter} markRevised={markRevised} notify={notify} />}
+        {tab === "Chapters" && <ChaptersTab chapters={chapters} setChapters={setChapters} subjects={SUBJECTS} subjectFilter={subjectFilter} setSubjectFilter={setSubjectFilter} statusFilter={statusFilter} setStatusFilter={setStatusFilter} selectedChapter={selectedChapter} setSelectedChapter={setSelectedChapter} markRevised={markRevised} notify={notify} />}
         {tab === "Analytics" && <AnalyticsTab chapters={allChapters} subjects={SUBJECTS} meta={meta} />}
         {tab === "Planner" && <PlannerTab chapters={allChapters} subjects={SUBJECTS} meta={meta} setMeta={setMeta} notify={notify} />}
         {tab === "Achieve" && <AchieveTab meta={meta} chapters={allChapters} />}
@@ -584,7 +584,7 @@ function DashboardTab({ chapters, meta, setMeta, subjects, overallProgress, revi
   );
 }
 
-function ChaptersTab({ chapters, subjects, subjectFilter, setSubjectFilter, statusFilter, setStatusFilter, selectedChapter, setSelectedChapter, markRevised, notify }) {
+function ChaptersTab({ chapters, setChapters, subjects, subjectFilter, setSubjectFilter, statusFilter, setStatusFilter, selectedChapter, setSelectedChapter, markRevised, notify }) {
   const [editingNotes, setEditingNotes] = useState(false);
   const [localNotes, setLocalNotes] = useState("");
 
@@ -725,7 +725,10 @@ function ChaptersTab({ chapters, subjects, subjectFilter, setSubjectFilter, stat
             <div style={{ marginBottom: 20 }}>
               <div style={{ fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 10 }}>ACTIVE RECALL CHECKLIST</div>
               {[["selfTest","Self-Test Done"],["mcqPractice","MCQ Practice"],["writtenPractice","Written Practice"],["formulaRevision","Formula Revision"]].map(([key, label]) => (
-                <label key={key} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", cursor: "pointer", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                <label key={key} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", cursor: "pointer", borderBottom: "1px solid rgba(255,255,255,0.04)" }} onClick={() => {
+                  const updatedData = { ...selected, [key]: !selected[key] };
+                  setChapters(prev => ({ ...prev, [selectedChapter]: updatedData }));
+                }}>
                   <div style={{ width: 18, height: 18, borderRadius: 5, border: `2px solid ${selected[key] ? "#8b5cf6" : "#334155"}`, background: selected[key] ? "#8b5cf6" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.15s" }}>
                     {selected[key] && <span style={{ color: "#fff", fontSize: 12, lineHeight: 1 }}>✓</span>}
                   </div>
