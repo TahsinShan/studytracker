@@ -394,18 +394,39 @@ export default function App() {
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         * { box-sizing: border-box; }
+        @media (max-width: 768px) {
+          .mobile-hide { display: none !important; }
+          .mobile-collapse { padding: 0 12px !important; }
+          .nav-brand { font-size: 14px !important; }
+          .stat-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+          .tab-bar { overflow-x: auto; }
+          .tab-item { font-size: 11px !important; padding: 8px 12px !important; }
+          main { padding: 16px 12px !important; }
+          .dashboard-row { grid-template-columns: 1fr !important; }
+          .chapters-grid { grid-template-columns: 1fr !important; gap: 16px !important; height: auto !important; }
+          .detail-panel { display: none; }
+          .chart-mobile-stack { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .stat-grid { grid-template-columns: 1fr !important; }
+          .tab-item { font-size: 10px !important; padding: 6px 8px !important; }
+          main { padding: 12px 8px !important; }
+          .card { padding: 16px !important; }
+          .modal-button { width: 100% !important; }
+          .chapter-name { font-size: 12px !important; }
+        }
       `}</style>
 
       {/* Top Nav */}
       <nav style={{ position: "sticky", top: 0, zIndex: 100, borderBottom: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(30px)", background: "rgba(5,8,22,0.7)", padding: "0 24px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 0, height: 60 }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", alignItems: "center", gap: 0, height: "auto", minHeight: 60, flexWrap: "wrap", paddingTop: 8, paddingBottom: 8 }}>
           <div style={{ marginRight: "auto", display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 32, height: 32, borderRadius: 10, background: "linear-gradient(135deg, #6366f1, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>📖</div>
-            <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 17, background: "linear-gradient(135deg, #818cf8, #c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>HSC RevisionOS</span>
+            <span className="nav-brand" style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 17, background: "linear-gradient(135deg, #818cf8, #c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>HSC RevisionOS</span>
           </div>
 
           {/* XP Bar */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginRight: 20, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 30, padding: "6px 14px" }}>
+          <div className="mobile-hide" style={{ display: "flex", alignItems: "center", gap: 10, marginRight: 20, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 30, padding: "6px 14px" }}>
             <span style={{ fontSize: 12, color: "#a78bfa", fontWeight: 700 }}>Lv.{meta.level}</span>
             <div style={{ width: 80, height: 6, background: "#1e293b", borderRadius: 3, overflow: "hidden" }}>
               <div style={{ height: "100%", width: `${xpProgress}%`, background: "linear-gradient(90deg, #7c3aed, #a855f7)", borderRadius: 3, transition: "width 0.5s ease" }} />
@@ -414,7 +435,7 @@ export default function App() {
           </div>
 
           {/* Streak */}
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 30, padding: "6px 14px" }}>
+          <div className="mobile-hide" style={{ display: "flex", alignItems: "center", gap: 6, marginRight: 20, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 30, padding: "6px 14px" }}>
             <span style={{ fontSize: 16 }}>🔥</span>
             <span style={{ fontSize: 13, fontWeight: 700, color: meta.streak > 0 ? "#f97316" : "#475569" }}>{meta.streak}d</span>
           </div>
@@ -426,14 +447,22 @@ export default function App() {
         </div>
 
         {/* Tab bar */}
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", gap: 2, paddingBottom: 0 }}>
+        <div className="tab-bar" style={{ maxWidth: 1400, margin: "0 auto", display: "flex", gap: 2, paddingBottom: 0, overflowX: "auto" }}>
           {TABS.map(t => (
-            <button key={t} onClick={() => setTab(t)} style={{ background: "none", border: "none", cursor: "pointer", padding: "10px 18px", fontSize: 13, fontWeight: tab === t ? 700 : 500, color: tab === t ? "#a78bfa" : "#64748b", borderBottom: tab === t ? "2px solid #8b5cf6" : "2px solid transparent", transition: "all 0.2s", letterSpacing: "0.01em" }}>
+            <button key={t} className="tab-item" onClick={() => setTab(t)} style={{ background: "none", border: "none", cursor: "pointer", padding: "10px 18px", fontSize: 13, fontWeight: tab === t ? 700 : 500, color: tab === t ? "#a78bfa" : "#64748b", borderBottom: tab === t ? "2px solid #8b5cf6" : "2px solid transparent", transition: "all 0.2s", letterSpacing: "0.01em", whiteSpace: "nowrap", flexShrink: 0 }}>
               {t}
             </button>
           ))}
-          <button onClick={() => setEmergencyMode(e => !e)} style={{ marginLeft: "auto", background: emergencyMode ? "linear-gradient(135deg, #dc2626, #ef4444)" : "rgba(239,68,68,0.1)", border: `1px solid ${emergencyMode ? "transparent" : "rgba(239,68,68,0.3)"}`, borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: emergencyMode ? "#fff" : "#f87171", cursor: "pointer", marginBottom: 4 }}>
-            {emergencyMode ? "🚨 EMERGENCY MODE ON" : "🚨 Emergency Mode"}
+          <button onClick={() => {
+            if (window.confirm("Are you sure you want to reset all progress? This cannot be undone!")) {
+              setChapters(initChapterState());
+              setMeta({ xp: 0, level: 1, streak: 0, lastStudyDay: null, totalPomodoros: 0, earnedBadges: [], studyDays: [], examDate: "2026-07-02", dailyGoal: 5 });
+            }
+          }} className="mobile-hide" style={{ background: "rgba(168,85,247,0.1)", border: "1px solid rgba(168,85,247,0.3)", borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: "#d8b4fe", cursor: "pointer", marginBottom: 4, flexShrink: 0 }}>
+            🔄 Reset
+          </button>
+          <button onClick={() => setEmergencyMode(e => !e)} className="mobile-hide" style={{ marginLeft: "auto", background: emergencyMode ? "linear-gradient(135deg, #dc2626, #ef4444)" : "rgba(239,68,68,0.1)", border: `1px solid ${emergencyMode ? "transparent" : "rgba(239,68,68,0.3)"}`, borderRadius: 8, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: emergencyMode ? "#fff" : "#f87171", cursor: "pointer", marginBottom: 4, flexShrink: 0 }}>
+            {emergencyMode ? "🚨 EMERGENCY ON" : "🚨 Mode"}
           </button>
         </div>
       </nav>
@@ -452,13 +481,13 @@ export default function App() {
 
 function StatCard({ label, value, sub, color = "#818cf8", glow = false }) {
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 22px", position: "relative", overflow: "hidden", transition: "transform 0.2s", cursor: "default" }}
+    <div className="card" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 22px", position: "relative", overflow: "hidden", transition: "transform 0.2s", cursor: "default" }}
       onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
       onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
       {glow && <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at top left, ${color}15 0%, transparent 60%)`, pointerEvents: "none" }} />}
-      <div style={{ fontSize: 12, color: "#64748b", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>{label}</div>
-      <div style={{ fontSize: 32, fontWeight: 800, fontFamily: "'Syne', sans-serif", color }}>{value}</div>
-      {sub && <div style={{ fontSize: 12, color: "#475569", marginTop: 4 }}>{sub}</div>}
+      <div style={{ fontSize: 11, color: "#64748b", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>{label}</div>
+      <div style={{ fontSize: 28, fontWeight: 800, fontFamily: "'Syne', sans-serif", color }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: "#475569", marginTop: 4 }}>{sub}</div>}
     </div>
   );
 }
@@ -507,7 +536,7 @@ function DashboardTab({ chapters, meta, setMeta, subjects, overallProgress, revi
       )}
 
       {/* Stats row */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16, marginBottom: 28 }}>
+      <div className="stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16, marginBottom: 28 }}>
         <StatCard label="Overall Progress" value={`${overallProgress}%`} sub={`${revisedCount}/${totalChapters} chapters`} color="#818cf8" glow />
         <StatCard label="Today's Revisions" value={todayRevised} sub={`Goal: ${meta.dailyGoal}`} color="#10b981" glow />
         <StatCard label="Due Today" value={dueToday} sub="spaced repetition" color={dueToday > 0 ? "#f59e0b" : "#10b981"} glow />
@@ -516,7 +545,7 @@ function DashboardTab({ chapters, meta, setMeta, subjects, overallProgress, revi
         <StatCard label="Study Streak" value={`${meta.streak}🔥`} sub="consecutive days" color="#f97316" glow />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+      <div className="dashboard-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
         {/* Today's Goal */}
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: 24 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
@@ -618,7 +647,7 @@ function ChaptersTab({ chapters, setChapters, subjects, subjectFilter, setSubjec
   }, [selectedChapter]);
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 24, height: "calc(100vh - 160px)", minHeight: 600 }}>
+    <div className="chapters-grid" style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 24, height: "calc(100vh - 160px)", minHeight: 600 }}>
       {/* Chapter List */}
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, overflow: "hidden", display: "flex", flexDirection: "column" }}>
         {/* Filters */}
@@ -679,7 +708,7 @@ function ChaptersTab({ chapters, setChapters, subjects, subjectFilter, setSubjec
       </div>
 
       {/* Chapter Detail Panel */}
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, overflow: "auto", display: "flex", flexDirection: "column" }}>
+      <div className="detail-panel" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, overflow: "auto", display: "flex", flexDirection: "column" }}>
         {!selected ? (
           <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#475569", gap: 12 }}>
             <div style={{ fontSize: 40 }}>📖</div>
@@ -717,7 +746,10 @@ function ChaptersTab({ chapters, setChapters, subjects, subjectFilter, setSubjec
               <div style={{ fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 10 }}>CONFIDENCE LEVEL</div>
               <div style={{ display: "flex", gap: 6 }}>
                 {["None","Low","Fair","Good","Strong"].map((label, i) => (
-                  <button key={i} onClick={() => markRevised(selected.id, { ...selected, confidence: i+1 })} style={{ flex: 1, padding: "8px 4px", border: `1px solid ${selected.confidence === i+1 ? CONFIDENCE_COLORS[i] : "rgba(255,255,255,0.08)"}`, borderRadius: 8, background: selected.confidence === i+1 ? `${CONFIDENCE_COLORS[i]}20` : "rgba(255,255,255,0.03)", cursor: "pointer", fontSize: 11, color: selected.confidence === i+1 ? CONFIDENCE_COLORS[i] : "#64748b", fontWeight: selected.confidence === i+1 ? 700 : 500, transition: "all 0.15s" }}>
+                  <button key={i} onClick={() => {
+                    const updatedData = { ...selected, confidence: i+1 };
+                    setChapters(prev => ({ ...prev, [selectedChapter]: updatedData }));
+                  }} style={{ flex: 1, padding: "8px 4px", border: `1px solid ${selected.confidence === i+1 ? CONFIDENCE_COLORS[i] : "rgba(255,255,255,0.08)"}`, borderRadius: 8, background: selected.confidence === i+1 ? `${CONFIDENCE_COLORS[i]}20` : "rgba(255,255,255,0.03)", cursor: "pointer", fontSize: 11, color: selected.confidence === i+1 ? CONFIDENCE_COLORS[i] : "#64748b", fontWeight: selected.confidence === i+1 ? 700 : 500, transition: "all 0.15s" }}>
                     {label}
                   </button>
                 ))}
@@ -820,7 +852,7 @@ function AnalyticsTab({ chapters, subjects, meta }) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+      <div className="chart-mobile-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
         {/* Status Distribution */}
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: 24 }}>
           <h3 style={{ margin: "0 0 16px", fontSize: 15, fontWeight: 700 }}>Status Distribution</h3>
@@ -913,7 +945,7 @@ function PlannerTab({ chapters, subjects, meta, setMeta, notify }) {
       </div>
 
       {planMode === "daily" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+        <div className="chart-mobile-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: 24 }}>
             <h3 style={{ margin: "0 0 16px", fontSize: 15, fontWeight: 700, color: "#f59e0b" }}>⏰ Due for Revision Today ({dueToday.length})</h3>
             {dueToday.length === 0 ? <div style={{ color: "#10b981", fontSize: 13 }}>✅ Nothing due! You're ahead.</div> : dueToday.map(ch => (
